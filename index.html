@@ -1,0 +1,652 @@
+<!doctype html>
+<html lang="en-IE">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>What senior leaders want from their next role | AIMS International Ireland</title>
+<meta name="description" content="An independent study of how Ireland’s senior leaders choose where to work. About 5 minutes, anonymous.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600&family=Spectral:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#ECEFEC; --surface:#FFFFFF; --ink:#142A24; --muted:#4F605A; --line:#C7D0CB;
+  --accent:#1E5A48; --accent-ink:#FFFFFF; --tint:#DCE7E1; --brass:#8C6A2C; --danger:#A3322B;
+  color-scheme:light;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#0E1714; --surface:#15211D; --ink:#E6EDE9; --muted:#9BACA5; --line:#2B3B35;
+    --accent:#7CC4A8; --accent-ink:#0E1714; --tint:#1D302A; --brass:#D6B26A; --danger:#F08A80;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0E1714; --surface:#15211D; --ink:#E6EDE9; --muted:#9BACA5; --line:#2B3B35;
+  --accent:#7CC4A8; --accent-ink:#0E1714; --tint:#1D302A; --brass:#D6B26A; --danger:#F08A80;
+  color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{height:100%;scroll-padding-top:calc(env(safe-area-inset-top,0px) + 4.5rem)}
+body{margin:0;min-height:100%;background:var(--paper);color:var(--ink);
+  font-family:"Public Sans",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  font-size:1.0625rem;line-height:1.6;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--paper)}
+.wrap{max-width:42rem;margin:0 auto;padding:0 1.25rem}
+a{color:var(--accent)}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+
+.brand{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;padding:1.5rem 0;font-weight:600;font-size:.95rem}
+.brand small{font-weight:400;color:var(--muted);font-size:.9rem}
+
+.hero{padding:3.5rem 0 1rem}
+h1{font-family:"Spectral",Georgia,"Times New Roman",serif;font-weight:300;
+  font-size:clamp(2.5rem,7.5vw,4.3rem);line-height:1.02;letter-spacing:-.015em;margin:0 0 1.5rem;max-width:13ch}
+.lede{font-size:1.2rem;line-height:1.55;color:var(--muted);max-width:36rem;margin:0 0 2.25rem}
+.facts{display:flex;flex-wrap:wrap;gap:1rem 2rem;margin:0 0 2.5rem;padding:0;list-style:none}
+.facts li{border-top:2px solid var(--brass);padding-top:.5rem;min-width:9rem;font-weight:500;line-height:1.35}
+.facts li span{display:block;font-weight:400;color:var(--muted);font-size:.9rem}
+.actions{display:flex;flex-wrap:wrap;gap:.75rem;align-items:center}
+.note{color:var(--muted);font-size:.95rem;margin:1rem 0 0}
+
+.btn{appearance:none;border:0;border-radius:999px;padding:.9rem 1.7rem;min-height:48px;
+  font:600 1rem/1.1 "Public Sans",system-ui,sans-serif;cursor:pointer;background:var(--accent);color:var(--accent-ink)}
+.btn.secondary{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
+.btn:disabled{opacity:.55;cursor:progress}
+.linkbtn{appearance:none;background:none;border:0;padding:.25rem 0;font:inherit;font-size:.95rem;color:var(--accent);text-decoration:underline;cursor:pointer}
+
+.info{padding:2.5rem 0 1rem;border-top:1px solid var(--line);margin-top:3.5rem}
+.info h2,.sec-head h2{font-family:"Spectral",Georgia,serif;font-weight:400;font-size:1.65rem;line-height:1.2;margin:0 0 .75rem}
+.info section{margin-bottom:2rem}
+.info p{margin:0 0 .75rem;max-width:38rem}
+footer{padding:2rem 0 3rem;color:var(--muted);font-size:.9rem;border-top:1px solid var(--line);margin-top:2rem}
+
+/* Survey */
+.bar{position:sticky;top:env(safe-area-inset-top,0px);background:var(--paper);z-index:5;border-bottom:1px solid var(--line)}
+.bar-inner{display:flex;justify-content:space-between;gap:1rem;padding:.8rem 0;font-size:.9rem;color:var(--muted)}
+.bar-inner strong{color:var(--ink);font-weight:600}
+.progress{height:3px;background:var(--line)}
+.progress i{display:block;height:100%;width:0;background:var(--accent);transition:width .35s ease}
+.sec-head{padding:2.5rem 0 .25rem}
+.sec-head h2{font-size:clamp(1.9rem,5vw,2.4rem);font-weight:300}
+.sec-head p{color:var(--muted);margin:0;max-width:36rem}
+
+.q{margin:2.5rem 0;scroll-margin-top:5rem}
+fieldset{border:0;padding:0;margin:0;min-width:0}
+legend,.q-label{display:block;padding:0;font-weight:600;font-size:1.08rem;line-height:1.4;margin:0 0 .2rem}
+.q-label .opt-tag{font-weight:400;color:var(--muted)}
+.q-help{color:var(--muted);font-size:.95rem;margin:.15rem 0 0}
+.err{display:none;color:var(--danger);font-weight:500;font-size:.95rem;margin:.6rem 0 0}
+.q.missing .err{display:block}
+.q.missing .opts .opt,.q.missing .rank button{border-color:var(--danger)}
+
+.opts{display:grid;gap:.5rem;margin-top:.85rem}
+.opt{position:relative;display:flex;align-items:center;gap:.8rem;padding:.8rem 1rem;min-height:48px;
+  background:var(--surface);border:1.5px solid var(--line);border-radius:12px;cursor:pointer;line-height:1.35}
+.opt input{position:absolute;opacity:0;width:1px;height:1px;pointer-events:none}
+.opt .mark{flex:none;width:1.15rem;height:1.15rem;border-radius:50%;border:1.5px solid var(--muted);background:var(--surface)}
+.opt .mark.sq{border-radius:4px}
+.opt:has(input:checked){border-color:var(--accent);background:var(--tint)}
+.opt:has(input:checked) .mark{background:var(--accent);border-color:var(--accent);box-shadow:inset 0 0 0 3px var(--surface)}
+.opt:has(input:focus-visible){outline:3px solid var(--accent);outline-offset:2px}
+.opt.disabled{opacity:.45;cursor:not-allowed}
+
+.days{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.85rem}
+.days .opt{width:3.4rem;height:3.4rem;padding:0;justify-content:center;font-family:"Spectral",Georgia,serif;font-size:1.45rem}
+.days .opt .mark{display:none}
+.days .opt.wide{width:auto;padding:0 1.1rem;font-family:"Public Sans",system-ui,sans-serif;font-size:.95rem}
+.days-scale{display:flex;justify-content:space-between;max-width:21.5rem;color:var(--muted);font-size:.85rem;margin-top:.35rem}
+
+.rank{list-style:none;padding:0;margin:.85rem 0 0;display:grid;gap:.5rem}
+.rank button{width:100%;display:flex;align-items:center;gap:1rem;text-align:left;padding:.65rem 1rem;min-height:58px;
+  background:var(--surface);border:1.5px solid var(--line);border-radius:12px;font:inherit;color:inherit;cursor:pointer;line-height:1.35}
+.rank .num{flex:none;width:2.5rem;height:2.5rem;border-radius:50%;border:1.5px dashed var(--line);
+  display:grid;place-items:center;font-family:"Spectral",Georgia,serif;font-size:1.55rem;line-height:1;color:var(--surface)}
+.rank button[aria-pressed="true"]{border-color:var(--brass)}
+.rank button[aria-pressed="true"] .num{border:0;background:var(--brass)}
+.rank .divider{font-size:.88rem;color:var(--muted);padding:.6rem 0 .1rem}
+.rank-tools{display:flex;gap:1.25rem;align-items:center;margin-top:.6rem;font-size:.95rem;color:var(--muted)}
+
+.lk{margin:1.1rem 0 1.4rem}
+.lk p{margin:0 0 .5rem;line-height:1.45}
+.scale{display:grid;grid-template-columns:repeat(5,1fr);gap:.35rem}
+.scale .opt{flex-direction:column;justify-content:flex-start;text-align:center;padding:.65rem .3rem;gap:.4rem;font-size:.82rem}
+@media (max-width:540px){
+  .scale{grid-template-columns:1fr}
+  .scale .opt{flex-direction:row;text-align:left;font-size:.95rem;padding:.6rem .9rem}
+}
+
+textarea,input[type="email"]{width:100%;margin-top:.75rem;padding:.8rem 1rem;font:inherit;color:var(--ink);
+  background:var(--surface);border:1.5px solid var(--line);border-radius:12px}
+textarea{min-height:7.5rem;resize:vertical}
+.nav{display:flex;justify-content:space-between;align-items:center;gap:1rem;margin:3rem 0 1rem;padding-top:1.5rem;border-top:1px solid var(--line)}
+.send-err{color:var(--danger);font-weight:500;margin:0 0 3rem}
+
+.done{padding:4rem 0 2rem}
+.banner{background:var(--tint);border-left:3px solid var(--accent);padding:.9rem 1.1rem;border-radius:4px;margin:1.5rem 0;font-size:.95rem}
+.share{margin-top:2.5rem;padding-top:1.5rem;border-top:1px solid var(--line)}
+.copied{color:var(--muted);font-size:.9rem;margin-left:.75rem}
+
+@media (prefers-reduced-motion:reduce){.progress i{transition:none}}
+</style>
+</head>
+<body>
+<!-- Hidden forms let Netlify Forms detect the fields when the page is hosted there. -->
+<form name="senior-leaders-survey" data-netlify="true" hidden><input name="payload"></form>
+<form name="report-requests" data-netlify="true" hidden><input name="email"><input name="briefing"></form>
+
+<main id="app"></main>
+<noscript><div class="wrap"><p>This survey needs JavaScript switched on.</p></div></noscript>
+
+<script>
+(function(){
+"use strict";
+
+/* Settings for hosting. "netlify" posts to Netlify Forms; "json" posts to CONFIG.jsonEndpoint; "preview" never sends (test mode). */
+var CONFIG = {
+  submit: "preview", /* TEST MODE: flip to "json" and set jsonEndpoint once the EU backend (Power Automate) is ready */
+  jsonEndpoint: "",
+  surveyForm: "senior-leaders-survey",
+  contactForm: "report-requests",
+  version: "2026-10-v1-test"
+};
+
+var KEY = "slr-survey-progress-v1";
+var DONE_KEY = "slr-survey-done-v1";
+
+var FACTORS = [
+  ["salary","Salary and total reward"],
+  ["progression","Career progression"],
+  ["culture","Company culture"],
+  ["hybrid","Hybrid and flexible working"],
+  ["leadership","Quality of leadership and who I’d report to"],
+  ["scope","Scope and autonomy of the role"],
+  ["direction","Company performance and direction"]
+];
+var LIKERT = ["Strongly disagree","Disagree","Neither agree nor disagree","Agree","Strongly agree"];
+var LIKERT_SHORT = ["Strongly disagree","Disagree","Neither","Agree","Strongly agree"];
+
+function leads(a){ return !!a.teamsize && a.teamsize !== "None"; }
+
+var SECTIONS = [
+  { id:"you", title:"About you",
+    intro:"A few questions so we can compare answers across levels and sectors. We don’t ask for your name or employer.",
+    qs:[
+      {id:"level", type:"single", label:"Which best describes your current level?",
+        options:["CEO, Managing Director or Country Manager","Other C-suite (CFO, COO, CMO, CHRO or similar)","Director or Vice President","Head of function or department","Senior manager","Other"]},
+      {id:"sector", type:"single", label:"Which sector do you work in?",
+        options:["Drinks","Food and FMCG","Retail","Pharma and life sciences","Technology","Financial services","Professional services","Manufacturing and industrial","Public sector and semi-state","Other"]},
+      {id:"ownership", type:"single", label:"How is your organisation owned?",
+        options:["Irish-owned, private","Irish-owned, publicly listed","Multinational headquartered outside Ireland","Private equity backed","Public sector or semi-state","Other"]},
+      {id:"teamsize", type:"single", label:"How many people do you lead, directly and indirectly?",
+        options:["None","1 to 10","11 to 50","51 to 250","More than 250"]},
+      {id:"location", type:"single", label:"Where are you based?",
+        options:["Dublin","Rest of Leinster","Munster","Connacht or Ulster (Republic of Ireland)","Northern Ireland","Outside the island of Ireland"]},
+      {id:"age", type:"single", optional:true, label:"Your age",
+        options:["Under 40","40 to 49","50 to 59","60 or over","Prefer not to say"]},
+      {id:"gender", type:"single", optional:true, label:"How do you describe your gender?",
+        options:["Woman","Man","I describe myself another way","Prefer not to say"]}
+    ]},
+  { id:"matters", title:"What matters most",
+    intro:"A couple of quick picks, moved up front so the office questions later don’t push your answer.",
+    qs:[
+      {id:"top3_move", type:"multi", factors:true, max:3, exact:true,
+        label:"If you were considering a move, which three of these would matter most?",
+        help:"Choose exactly three."},
+      {id:"leave_factor", type:"single", factors:true,
+        label:"Which one of these, done badly, would be most likely to make you leave your current role?"},
+      {id:"openness", type:"single", label:"How open are you to a move in the next 12 months?",
+        options:["Actively looking","Open to the right approach","Happy where I am","Not sure"]}
+    ]},
+  { id:"now", title:"How you work now",
+    intro:"Your current pattern, and the one you’d choose.",
+    qs:[
+      {id:"days", type:"daysgrid", label:"In a typical week, how many days are you…",
+        rows:[
+          {key:"required", label:"expected to be in the office", none:"No set expectation"},
+          {key:"actual", label:"actually in the office"},
+          {key:"ideal", label:"in the office, if it were entirely your choice"}
+        ]},
+      {id:"plus_one", type:"single", label:"If your employer added one more required office day per week, what would you most likely do?",
+        options:["Accept it without concern","Accept it, but reluctantly","Start to look at other options","Actively look to leave within 12 months","Not sure"]}
+    ]},
+  { id:"trade", title:"The price of flexibility",
+    intro:"What flexibility is worth to you in practice.",
+    qs:[
+      {id:"premium", type:"single",
+        label:"Imagine two otherwise identical senior roles, one hybrid and one fully office-based. What salary premium would the office-based role need to offer before you’d consider it?",
+        options:["None, I’d be indifferent","Up to 5%","5% to 10%","10% to 15%","15% to 20%","More than 20%","No premium would persuade me"]},
+      {id:"declined", type:"multi", exclusive:"None of these",
+        label:"In the last three years, has office attendance been a reason you did any of the following?",
+        help:"Select all that apply.",
+        options:["Declined an approach about a role","Withdrew from a recruitment process","Turned down an offer","Left a role","None of these"]}
+    ]},
+  { id:"lead", title:"As a leader", showIf:leads,
+    intro:"Now some questions about the expectations you set for others.",
+    qs:[
+      {id:"policy_owner", type:"single", label:"Who decides the office attendance requirement for your team?",
+        options:["I decide","I have significant influence","Leadership in Ireland","Group or global headquarters","There is no formal requirement"]},
+      {id:"days_team", type:"days", label:"How many office days a week do you require, or would you require, of your team?"},
+      {id:"org_change", type:"single", label:"In the last 12 months, has your organisation changed its office attendance requirements?",
+        options:["Increased them","No change","Reduced them","An increase is planned","Not sure"]},
+      {id:"reasons", type:"multi", max:3, label:"What are the main reasons for in-office requirements in your organisation?",
+        help:"Choose up to three.",
+        options:["Collaboration and innovation","Culture and connection","Developing junior and newer staff","Productivity","Oversight and performance management","Client or customer needs","Use of office space we pay for","Instruction from headquarters","Other"]},
+      {id:"perceived_rank", type:"multi", factors:true, max:3, exact:true,
+        label:"Which three would the senior candidates you hire say matter most?",
+        help:"Choose exactly three — same list as before."},
+      {id:"lost_talent", type:"single", label:"In the last two years, have you lost a hire or a team member where office policy was a factor?",
+        options:["Yes, more than once","Yes, once","No","Not sure"]},
+      {id:"statements", type:"likert", label:"How far do you agree with each statement?",
+        statements:[
+          ["same_standard","I hold myself to the same attendance standard I set for my team."],
+          ["leaders_flex","Senior leaders in my organisation are more flexible with their own attendance than with their teams’."],
+          ["policy_attracts","Our office policy helps us attract senior talent."]
+        ]}
+    ]},
+  { id:"close", title:"Final thoughts",
+    intro:"Two optional questions, then you’re done.",
+    qs:[
+      {id:"wrong", type:"text", optional:true, label:"What is the one thing employers get wrong when trying to attract senior people?"},
+      {id:"email", type:"email", optional:true, label:"Would you like a copy of the findings?",
+        help:"Your email is sent separately from your answers and used only to send you the report."},
+      {id:"briefing", type:"check", optional:true, label:"I’d also welcome a short briefing on the findings for my sector."}
+    ]}
+];
+
+/* ---------- State ---------- */
+var storageOk = true;
+var store = fresh();
+function fresh(){ return {answers:{}, shuffles:{}, startedAt:null, step:-1}; }
+try{
+  var raw = localStorage.getItem(KEY);
+  if(raw){ var p = JSON.parse(raw); if(p && p.answers){ store = p; } }
+}catch(e){ storageOk = false; }
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify(store)); }catch(e){ storageOk = false; } }
+function wasDone(){ try{ return !!localStorage.getItem(DONE_KEY); }catch(e){ return false; } }
+var A = store.answers;
+
+function embedded(){ try{ return window.self !== window.top; }catch(e){ return true; } }
+var reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+function visibleSections(){ return SECTIONS.filter(function(s){ return !s.showIf || s.showIf(A); }); }
+function shuffleFor(id){
+  if(!store.shuffles[id]){
+    var ids = FACTORS.map(function(f){ return f[0]; });
+    for(var i = ids.length - 1; i > 0; i--){ var j = Math.floor(Math.random() * (i + 1)); var t = ids[i]; ids[i] = ids[j]; ids[j] = t; }
+    store.shuffles[id] = ids; save();
+  }
+  return store.shuffles[id];
+}
+function factorLabel(id){ for(var i = 0; i < FACTORS.length; i++){ if(FACTORS[i][0] === id) return FACTORS[i][1]; } return id; }
+
+/* ---------- DOM helper ---------- */
+function h(tag, attrs){
+  var el = document.createElement(tag);
+  attrs = attrs || {};
+  Object.keys(attrs).forEach(function(k){
+    var v = attrs[k];
+    if(v == null || v === false) return;
+    if(k === "class") el.className = v;
+    else if(k === "text") el.textContent = v;
+    else if(k.indexOf("on") === 0) el.addEventListener(k.slice(2), v);
+    else el.setAttribute(k, v === true ? "" : v);
+  });
+  for(var i = 2; i < arguments.length; i++){
+    var kid = arguments[i];
+    if(kid == null || kid === false) continue;
+    if(Array.isArray(kid)) kid.forEach(function(k){ if(k) el.append(k); });
+    else el.append(kid.nodeType ? kid : document.createTextNode(String(kid)));
+  }
+  return el;
+}
+var app = document.getElementById("app");
+
+function brand(){
+  return h("div",{class:"wrap"}, h("div",{class:"brand"}, "AIMS International Ireland", h("small",{text:"Independent research"})));
+}
+
+/* ---------- Landing ---------- */
+function renderLanding(){
+  app.innerHTML = "";
+  var inProgress = store.step >= 0 && Object.keys(A).length > 0;
+  var actions = h("div",{class:"actions"});
+  if(inProgress){
+    actions.append(
+      h("button",{class:"btn", type:"button", onclick:function(){ go(Math.min(store.step, visibleSections().length - 1)); }}, "Continue where you left off"),
+      h("button",{class:"btn secondary", type:"button", onclick:restart}, "Start again")
+    );
+  } else {
+    actions.append(h("button",{class:"btn", type:"button", onclick:begin}, "Start the survey"));
+  }
+  app.append(
+    brand(),
+    h("div",{class:"wrap"},
+      h("div",{class:"hero"},
+        h("h1",{tabindex:"-1"}, "What senior leaders want from their next role"),
+        h("p",{class:"lede"}, "An independent study of how Ireland’s senior leaders weigh pay, progression, leadership, culture and flexibility when they choose where to work, and how they lead their own teams."),
+        h("div",{class:"banner"}, "Test site for internal review only. Answers aren’t recorded yet \u2014 the backend isn’t wired up."),
+        h("ul",{class:"facts"},
+          h("li",null,"About 5 minutes", h("span",null,"Most questions are a single tap")),
+          h("li",null,"Anonymous", h("span",null,"No name or employer asked")),
+          h("li",null,"Senior leaders", h("span",null,"Head of level to C-suite"))
+        ),
+        actions,
+        wasDone() ? h("p",{class:"note"}, "You’ve already completed this survey on this device. Thank you.") : null,
+        storageOk ? h("p",{class:"note"}, "Your progress is saved on this device, so you can pause and come back.") : null
+      ),
+      h("div",{class:"info"},
+        h("section",null,
+          h("h2",null,"Why we’re asking"),
+          h("p",null,"Most research on work and careers looks at employers or at the workforce as a whole. Far less asks senior leaders directly what decides where they go, what keeps them, and how they set expectations for the people they lead."),
+          h("p",null,"Your answers will help employers understand what it really takes to attract and keep senior talent in Ireland.")
+        ),
+        h("section",null,
+          h("h2",null,"How your answers are used"),
+          h("p",null,"We don’t ask for your name or employer. Results are reported only in aggregate, and we never report on any group of fewer than ten people."),
+          h("p",null,"If you’d like a copy of the findings, you can leave an email address at the end. It is sent and stored separately from your answers. The findings will be shared with participants in early 2027.")
+        ),
+        h("section",null,
+          h("h2",null,"Who is running it"),
+          h("p",null,"The study is run by AIMS International Ireland, a partner-led executive search firm and part of AIMS International, a network of search firms in more than 70 countries.")
+        )
+      ),
+      h("footer",null, "Questions about this study: Mark Burgess, AIMS International Ireland.")
+    )
+  );
+}
+function begin(){ if(!store.startedAt) store.startedAt = Date.now(); go(0); }
+function restart(){ store = fresh(); A = store.answers; store.startedAt = Date.now(); go(0); }
+
+/* ---------- Questions ---------- */
+function optionRow(type, name, value, label, checked, disabled, onChange, cls){
+  var input = h("input",{type:type, name:name, value:value});
+  input.checked = !!checked; input.disabled = !!disabled;
+  input.addEventListener("change", onChange);
+  return h("label",{class:"opt" + (cls ? " " + cls : "") + (disabled ? " disabled" : "")},
+    input, h("span",{class:"mark" + (type === "checkbox" ? " sq" : ""), "aria-hidden":"true"}), h("span",{class:"txt"}, label));
+}
+function errText(q){
+  if(q.type === "likert") return "Answer each statement to continue.";
+  if(q.type === "daysgrid") return "Answer all three to continue.";
+  if(q.type === "multi" && q.exact) return "Choose exactly " + q.max + " to continue.";
+  return "Answer this question to continue.";
+}
+function labelEl(q, tag, attrs){
+  attrs = attrs || {}; attrs.class = "q-label";
+  return h(tag, attrs, q.label, q.optional && q.type !== "check" ? h("span",{class:"opt-tag"}," (optional)") : null);
+}
+function clearMissing(el){ el.classList.remove("missing"); }
+
+function qOptions(q){ return q.factors ? shuffleFor(q.id).map(factorLabel) : q.options; }
+
+function qEl(q){
+  var wrap = h("div",{class:"q", "data-id":q.id});
+  var help = q.help ? h("p",{class:"q-help"}, q.help) : null;
+  var err = h("p",{class:"err", role:"alert"}, errText(q));
+
+  if(q.type === "single"){
+    var fs = h("fieldset",null, labelEl(q,"legend"), help,
+      h("div",{class:"opts"}, qOptions(q).map(function(o){
+        return optionRow("radio", q.id, o, o, A[q.id] === o, false, function(){
+          A[q.id] = o; save(); clearMissing(wrap); if(q.id === "teamsize") updateBar();
+        });
+      })));
+    wrap.append(fs, err);
+  }
+  else if(q.type === "multi"){
+    var cur = A[q.id] || [];
+    var fs2 = h("fieldset",null, labelEl(q,"legend"), help,
+      h("div",{class:"opts"}, qOptions(q).map(function(o){
+        var dis = q.max && cur.length >= q.max && cur.indexOf(o) < 0;
+        return optionRow("checkbox", q.id, o, o, cur.indexOf(o) >= 0, dis, function(e){
+          var next = (A[q.id] || []).slice();
+          if(e.target.checked){
+            if(o === q.exclusive) next = [o];
+            else { next = next.filter(function(x){ return x !== q.exclusive; }); next.push(o); }
+          } else next = next.filter(function(x){ return x !== o; });
+          A[q.id] = next; save(); replaceQ(q, 'input[value="' + cssEsc(o) + '"]');
+        });
+      })));
+    wrap.append(fs2, err);
+  }
+  else if(q.type === "days"){
+    var vals = ["0","1","2","3","4","5"];
+    var rows = vals.map(function(v){
+      return optionRow("radio", q.id, v, v, A[q.id] === v, false, function(){ A[q.id] = v; save(); clearMissing(wrap); });
+    });
+    if(q.none) rows.push(optionRow("radio", q.id, q.none, q.none, A[q.id] === q.none, false, function(){ A[q.id] = q.none; save(); clearMissing(wrap); }, "wide"));
+    wrap.append(h("fieldset",null, labelEl(q,"legend"), help,
+      h("div",{class:"days"}, rows),
+      h("div",{class:"days-scale","aria-hidden":"true"}, h("span",null,"Days a week"))
+    ), err);
+  }
+  else if(q.type === "daysgrid"){
+    var curObj = A[q.id] || {};
+    var fs4 = h("fieldset",null, labelEl(q,"legend"), help,
+      q.rows.map(function(row){
+        var vals3 = ["0","1","2","3","4","5"];
+        var rowOpts = vals3.map(function(v){
+          return optionRow("radio", q.id + "__" + row.key, v, v, curObj[row.key] === v, false, function(){
+            var next = Object.assign({}, A[q.id] || {}); next[row.key] = v; A[q.id] = next; save(); clearMissing(wrap);
+          });
+        });
+        if(row.none) rowOpts.push(optionRow("radio", q.id + "__" + row.key, row.none, row.none, curObj[row.key] === row.none, false, function(){
+          var next = Object.assign({}, A[q.id] || {}); next[row.key] = row.none; A[q.id] = next; save(); clearMissing(wrap);
+        }, "wide"));
+        return h("div",{class:"q-sub"},
+          h("p",{class:"q-help", style:"margin:1rem 0 .3rem;font-weight:500;color:var(--ink)"}, row.label),
+          h("div",{class:"days"}, rowOpts)
+        );
+      }));
+    wrap.append(fs4, err);
+  }
+  else if(q.type === "likert"){
+    var vals2 = A[q.id] || {};
+    var fs3 = h("fieldset",null, labelEl(q,"legend"), help,
+      q.statements.map(function(st){
+        var key = st[0], sid = "st-" + q.id + "-" + key;
+        return h("div",{class:"lk"},
+          h("p",{id:sid}, st[1]),
+          h("div",{class:"scale", role:"radiogroup", "aria-labelledby":sid},
+            LIKERT.map(function(o, i){
+              return optionRow("radio", q.id + "__" + key, o, LIKERT_SHORT[i], vals2[key] === o, false, function(){
+                var v = Object.assign({}, A[q.id] || {}); v[key] = o; A[q.id] = v; save();
+                if(answered(q)) clearMissing(wrap);
+              });
+            })
+          )
+        );
+      }));
+    wrap.append(fs3, err);
+  }
+  else if(q.type === "text"){
+    var tid = "f-" + q.id;
+    var ta = h("textarea",{id:tid, rows:"4"});
+    ta.value = A[q.id] || "";
+    ta.addEventListener("input", function(){ A[q.id] = ta.value; save(); });
+    wrap.append(labelEl(q,"label",{for:tid}), help, ta);
+  }
+  else if(q.type === "email"){
+    var eid = "f-" + q.id;
+    var inp = h("input",{id:eid, type:"email", autocomplete:"email", inputmode:"email", placeholder:"you@company.com"});
+    inp.value = A[q.id] || "";
+    inp.addEventListener("input", function(){ A[q.id] = inp.value; save(); clearMissing(wrap); });
+    wrap.append(labelEl(q,"label",{for:eid}), help, inp, h("p",{class:"err", role:"alert"}, "Enter a valid email address, or leave this blank."));
+  }
+  else if(q.type === "check"){
+    wrap.append(h("div",{class:"opts"},
+      optionRow("checkbox", q.id, "yes", q.label, !!A[q.id], false, function(e){ A[q.id] = e.target.checked; save(); })));
+  }
+  return wrap;
+}
+function replaceQ(q, focusSel){
+  var old = document.querySelector('.q[data-id="' + q.id + '"]');
+  if(!old) return;
+  var nw = qEl(q);
+  old.replaceWith(nw);
+  if(answered(q)) clearMissing(nw);
+  if(focusSel){ var f = nw.querySelector(focusSel); if(f) f.focus(); }
+}
+function cssEsc(s){ return String(s).replace(/["\\]/g, "\\$&"); }
+
+function answered(q){
+  var v = A[q.id];
+  if(q.type === "multi") return Array.isArray(v) && (q.exact ? v.length === q.max : v.length > 0);
+  if(q.type === "likert") return !!v && q.statements.every(function(s){ return !!v[s[0]]; });
+  if(q.type === "daysgrid") return !!v && q.rows.every(function(r){ return v[r.key] != null && v[r.key] !== ""; });
+  if(q.type === "single" || q.type === "days") return v != null && v !== "";
+  return true;
+}
+function validEmail(s){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s); }
+
+/* ---------- Section view ---------- */
+var barText, barFill;
+function updateBar(){
+  var secs = visibleSections(), n = secs.length, i = Math.min(store.step, n - 1);
+  if(barText) barText.textContent = "Part " + (i + 1) + " of " + n;
+  if(barFill) barFill.style.width = Math.round((i / n) * 100) + "%";
+}
+function renderSection(){
+  var secs = visibleSections();
+  var i = Math.min(store.step, secs.length - 1);
+  var s = secs[i], last = i === secs.length - 1;
+  app.innerHTML = "";
+  barText = h("strong",null,"");
+  barFill = h("i",null);
+  var head = h("h2",{tabindex:"-1"}, s.title);
+  var sendErr = h("p",{class:"send-err", role:"alert", hidden:true});
+  var nextBtn = h("button",{class:"btn", type:"button", onclick:function(){ next(s, last, nextBtn, sendErr); }}, last ? "Submit answers" : "Continue");
+  app.append(
+    h("div",{class:"bar"},
+      h("div",{class:"wrap"}, h("div",{class:"bar-inner"}, barText, h("span",null, s.title))),
+      h("div",{class:"progress","aria-hidden":"true"}, barFill)
+    ),
+    h("div",{class:"wrap"},
+      h("div",{class:"sec-head"}, head, s.intro ? h("p",null, s.intro) : null),
+      s.qs.filter(function(q){ return !q.showIf || q.showIf(A); }).map(qEl),
+      h("div",{class:"nav"},
+        h("button",{class:"btn secondary", type:"button", onclick:function(){ i > 0 ? go(i - 1) : goLanding(); }}, i > 0 ? "Back" : "Back to introduction"),
+        nextBtn
+      ),
+      sendErr
+    )
+  );
+  updateBar();
+  window.scrollTo(0, 0);
+  head.focus({preventScroll:true});
+}
+function next(s, last, btn, sendErr){
+  var first = null;
+  s.qs.forEach(function(q){
+    if(q.showIf && !q.showIf(A)) return;
+    var el = document.querySelector('.q[data-id="' + q.id + '"]');
+    var bad = (!q.optional && !answered(q)) || (q.type === "email" && A.email && !validEmail(A.email.trim()));
+    if(bad){ el.classList.add("missing"); if(!first) first = el; }
+  });
+  if(first){
+    first.scrollIntoView({behavior: reduced ? "auto" : "smooth", block:"start"});
+    var f = first.querySelector("input,button,textarea"); if(f) f.focus({preventScroll:true});
+    return;
+  }
+  if(last) submit(btn, sendErr); else go(store.step + 1);
+}
+function go(i){ store.step = i; save(); renderSection(); }
+function goLanding(){ store.step = -1; save(); renderLanding(); window.scrollTo(0,0); }
+
+/* ---------- Submit ---------- */
+function buildPayload(){
+  var ids = [];
+  visibleSections().forEach(function(s){ s.qs.forEach(function(q){ if(!q.showIf || q.showIf(A)) ids.push(q.id); }); });
+  var answers = {};
+  ids.forEach(function(id){ if(id !== "email" && id !== "briefing" && A[id] != null && A[id] !== "") answers[id] = A[id]; });
+  return {
+    version: CONFIG.version,
+    submittedAt: new Date().toISOString(),
+    minutesTaken: store.startedAt ? Math.max(1, Math.round((Date.now() - store.startedAt) / 60000)) : null,
+    answers: answers,
+    factorDisplayOrder: { top3_move: store.shuffles.top3_move, leave_factor: store.shuffles.leave_factor, perceived_rank: store.shuffles.perceived_rank }
+  };
+}
+function postForm(name, fields){
+  var body = new URLSearchParams(Object.assign({"form-name": name}, fields)).toString();
+  return fetch("/", {method:"POST", headers:{"Content-Type":"application/x-www-form-urlencoded"}, body:body})
+    .then(function(r){ if(!r.ok) throw new Error("HTTP " + r.status); });
+}
+function postJson(obj){
+  return fetch(CONFIG.jsonEndpoint, {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify(obj)})
+    .then(function(r){ if(!r.ok) throw new Error("HTTP " + r.status); });
+}
+function submit(btn, sendErr){
+  var mode = embedded() ? "preview" : CONFIG.submit;
+  var payload = buildPayload();
+  var email = (A.email || "").trim();
+  var briefing = !!A.briefing;
+  btn.disabled = true; btn.textContent = "Sending…"; sendErr.hidden = true;
+
+  var p;
+  if(mode === "preview") p = Promise.resolve();
+  else if(mode === "json"){
+    p = postJson({type:"response", payload:payload}).then(function(){
+      if(email) return postJson({type:"report-request", email:email, briefing:briefing}).catch(function(){});
+    });
+  } else {
+    p = postForm(CONFIG.surveyForm, {payload: JSON.stringify(payload)}).then(function(){
+      if(email) return postForm(CONFIG.contactForm, {email:email, briefing: briefing ? "yes" : "no"}).catch(function(){});
+    });
+  }
+  p.then(function(){
+    try{ localStorage.removeItem(KEY); localStorage.setItem(DONE_KEY, new Date().toISOString()); }catch(e){}
+    store = fresh(); A = store.answers;
+    renderDone(mode === "preview", !!email);
+  }).catch(function(){
+    btn.disabled = false; btn.textContent = "Submit answers";
+    sendErr.textContent = "Your answers couldn’t be sent. Check your connection and select Submit answers again. Nothing has been lost.";
+    sendErr.hidden = false;
+  });
+}
+
+/* ---------- Done ---------- */
+function renderDone(preview, gaveEmail){
+  app.innerHTML = "";
+  var copied = h("span",{class:"copied", "aria-live":"polite"});
+  var link = location.href.split("#")[0];
+  var head = h("h1",{tabindex:"-1"}, "Thank you");
+  app.append(
+    brand(),
+    h("div",{class:"wrap"},
+      h("div",{class:"done"},
+        head,
+        h("p",{class:"lede"}, gaveEmail
+          ? "Your answers have been recorded. We’ll send you the findings in early 2027."
+          : "Your answers have been recorded and will be combined with those of other senior leaders across Ireland."),
+        preview ? h("div",{class:"banner"}, "Test mode: this response wasn’t recorded. We’ll switch recording on once the backend is wired up.") : null,
+        h("div",{class:"share"},
+          h("h2",{class:"q-label"}, "Know other senior leaders who should take part?"),
+          h("p",{class:"q-help"}, "The more voices we hear, the more useful the findings are for everyone."),
+          h("p",null,
+            h("button",{class:"btn secondary", type:"button", onclick:function(){
+              var done = function(){ copied.textContent = "Link copied"; };
+              var fail = function(){ copied.textContent = link; };
+              try{ navigator.clipboard.writeText(link).then(done, fail); }catch(e){ fail(); }
+            }}, "Copy survey link"),
+            copied
+          )
+        )
+      ),
+      h("footer",null, "Questions about this study: Mark Burgess, AIMS International Ireland.")
+    )
+  );
+  window.scrollTo(0,0);
+  head.focus({preventScroll:true});
+}
+
+/* ---------- Start ---------- */
+renderLanding();
+})();
+</script>
+</body>
+</html>
