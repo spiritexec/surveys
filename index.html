@@ -5,6 +5,18 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>What senior leaders want from their next role | AIMS International Ireland</title>
 <meta name="description" content="An independent study of how Ireland’s senior leaders choose where to work. About 5 minutes, anonymous.">
+<link rel="canonical" href="https://spiritexec.github.io/surveys/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="AIMS International Ireland">
+<meta property="og:title" content="What senior leaders want from their next role">
+<meta property="og:description" content="An independent study of how Ireland’s senior leaders weigh pay, progression, leadership, culture and flexibility when they choose where to work. About 5 minutes, anonymous.">
+<meta property="og:url" content="https://spiritexec.github.io/surveys/">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="What senior leaders want from their next role">
+<meta name="twitter:description" content="An independent study of how Ireland’s senior leaders weigh pay, progression, leadership, culture and flexibility when they choose where to work.">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","name":"What senior leaders want from their next role","description":"An independent study of how Ireland’s senior leaders weigh pay, progression, leadership, culture and flexibility when they choose where to work, and how they lead their own teams.","publisher":{"@type":"Organization","name":"AIMS International Ireland","url":"https://www.aimsinternational.com/company/aims-ireland"},"about":"Senior leader hybrid and flexible working survey, Ireland and UK, 2026","audience":{"@type":"Audience","audienceType":"Senior business leaders, Head of function to C-suite"}}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -42,12 +54,15 @@ a{color:var(--accent)}
 .brand{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;padding:1rem 0;
   font-weight:600;font-size:1rem;border-bottom:2px solid var(--ink)}
 .brand small{font-weight:400;color:var(--muted);font-size:.72rem;text-transform:uppercase;letter-spacing:.1em}
+.brand-logo{height:26px;width:auto;display:block}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .brand-logo{filter:invert(1)}}
+:root[data-theme="dark"] .brand-logo{filter:invert(1)}
 
 .hero{padding:1.75rem 0 .5rem}
 h1{font-family:"IBM Plex Sans",system-ui,sans-serif;font-weight:600;
   font-size:clamp(2.1rem,6vw,3.3rem);line-height:1.04;letter-spacing:-.015em;margin:0 0 1rem;max-width:16ch}
 .lede{font-size:1.15rem;line-height:1.5;color:var(--muted);max-width:48rem;margin:0 0 1.5rem}
-.facts{display:flex;flex-wrap:wrap;gap:1rem 2rem;margin:0 0 1.5rem;padding:0;list-style:none}
+.facts{display:flex;flex-wrap:wrap;justify-content:center;gap:1rem 2rem;margin:0 0 1.5rem;padding:0;list-style:none}
 .facts li{border-top:3px solid var(--ink);padding-top:.5rem;min-width:9rem;font-weight:500;line-height:1.35}
 .facts li:nth-child(even){border-color:var(--accent)}
 .facts li span{display:block;font-weight:400;color:var(--muted);font-size:.9rem}
@@ -60,6 +75,16 @@ h1{font-family:"IBM Plex Sans",system-ui,sans-serif;font-weight:600;
 .btn.secondary{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
 .btn:disabled{opacity:.55;cursor:progress}
 .linkbtn{appearance:none;background:none;border:0;padding:.25rem 0;font:inherit;font-size:.95rem;color:var(--accent);text-decoration:underline;cursor:pointer}
+
+.scroll-cue{display:flex;justify-content:center;margin:2rem 0 .5rem}
+.scroll-cue button{appearance:none;border:1.5px solid var(--line);background:var(--surface);border-radius:50%;
+  width:2.75rem;height:2.75rem;display:grid;place-items:center;cursor:pointer;color:var(--muted);
+  animation:scrollCue 1.8s ease-in-out infinite}
+.scroll-cue button:hover{color:var(--accent);border-color:var(--accent)}
+.scroll-cue .chevron{width:.65rem;height:.65rem;border-right:2px solid currentColor;border-bottom:2px solid currentColor;
+  transform:rotate(45deg);margin-top:-.3rem}
+@keyframes scrollCue{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
+@media (prefers-reduced-motion:reduce){.scroll-cue button{animation:none}}
 
 .info{padding:1.75rem 0 1rem;border-top:1px solid var(--line);margin-top:1.75rem}
 .info h2,.sec-head h2{font-family:"IBM Plex Sans",system-ui,sans-serif;font-weight:600;font-size:1.5rem;line-height:1.2;margin:0 0 .75rem}
@@ -142,7 +167,14 @@ textarea{min-height:7.5rem;resize:vertical}
 <form name="report-requests" data-netlify="true" hidden><input name="email"><input name="briefing"></form>
 
 <main id="app"></main>
-<noscript><div class="wrap"><p>This survey needs JavaScript switched on.</p></div></noscript>
+<noscript>
+<div class="wrap">
+<h1>What senior leaders want from their next role</h1>
+<p>An independent study of how Ireland’s senior leaders weigh pay, progression, leadership, culture and flexibility when they choose where to work, and how they lead their own teams. About 5 minutes, anonymous. No name or employer asked.</p>
+<p>Run by AIMS International Ireland, a partner-led executive search firm and part of AIMS International, a network of search firms in more than 70 countries.</p>
+<p>This page needs JavaScript switched on to take the survey.</p>
+</div>
+</noscript>
 
 <script>
 (function(){
@@ -309,7 +341,16 @@ function h(tag, attrs){
 var app = document.getElementById("app");
 
 function brand(){
-  return h("div",{class:"wrap"}, h("div",{class:"brand"}, "AIMS International Ireland", h("small",{text:"Independent research"})));
+  return h("div",{class:"wrap"}, h("div",{class:"brand"},
+    h("img",{class:"brand-logo", src:"aims-logo.png", alt:"AIMS International"}),
+    h("small",{text:"Independent research"})));
+}
+function scrollCue(){
+  return h("div",{class:"scroll-cue"},
+    h("button",{type:"button", "aria-label":"Scroll down", onclick:function(){
+      document.querySelector(".info").scrollIntoView({behavior: reduced ? "auto" : "smooth", block:"start"});
+    }}, h("span",{class:"chevron","aria-hidden":"true"}))
+  );
 }
 
 /* ---------- Landing ---------- */
@@ -331,7 +372,6 @@ function renderLanding(){
       h("div",{class:"hero"},
         h("h1",{tabindex:"-1"}, "What senior leaders want from their next role"),
         h("p",{class:"lede"}, "An independent study of how Ireland’s senior leaders weigh pay, progression, leadership, culture and flexibility when they choose where to work, and how they lead their own teams."),
-        h("div",{class:"banner"}, "Test site for internal review only. Answers aren’t recorded yet \u2014 the backend isn’t wired up."),
         h("ul",{class:"facts"},
           h("li",null,"About 5 minutes", h("span",null,"Most questions are a single tap")),
           h("li",null,"Anonymous", h("span",null,"No name or employer asked")),
@@ -339,7 +379,8 @@ function renderLanding(){
         ),
         actions,
         wasDone() ? h("p",{class:"note"}, "You’ve already completed this survey on this device. Thank you.") : null,
-        storageOk ? h("p",{class:"note"}, "Your progress is saved on this device, so you can pause and come back.") : null
+        storageOk ? h("p",{class:"note"}, "Your progress is saved on this device, so you can pause and come back.") : null,
+        scrollCue()
       ),
       h("div",{class:"info"},
         h("section",null,
@@ -627,7 +668,7 @@ function renderDone(preview, gaveEmail){
         h("p",{class:"lede"}, gaveEmail
           ? "Your answers have been recorded. We’ll send you the findings in early 2027."
           : "Your answers have been recorded and will be combined with those of other senior leaders across Ireland."),
-        preview ? h("div",{class:"banner"}, "Test mode: this response wasn’t recorded. We’ll switch recording on once the backend is wired up.") : null,
+        preview ? h("p",{class:"note"}, "Not recorded in this test build.") : null,
         h("div",{class:"share"},
           h("h2",{class:"q-label"}, "Know other senior leaders who should take part?"),
           h("p",{class:"q-help"}, "The more voices we hear, the more useful the findings are for everyone."),
