@@ -35,11 +35,11 @@ body{margin:0;min-height:100%;background:var(--paper);color:var(--ink);
   font-family:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
   font-size:1.0625rem;line-height:1.6;-webkit-font-smoothing:antialiased}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--paper)}
-.wrap{max-width:42rem;margin:0 auto;padding:0 1.25rem}
+.wrap{max-width:52rem;margin:0 auto;padding:0 1.25rem}
 a{color:var(--accent)}
 :focus-visible{outline:3px solid var(--accent);outline-offset:3px}
 
-.brand{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;padding:1.5rem 0;
+.brand{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;padding:1rem 0;
   font-weight:600;font-size:1rem;border-bottom:2px solid var(--ink)}
 .brand small{font-weight:400;color:var(--muted);font-size:.72rem;text-transform:uppercase;letter-spacing:.1em}
 
@@ -67,7 +67,7 @@ h1{font-family:"IBM Plex Sans",system-ui,sans-serif;font-weight:600;
 footer{padding:2rem 0 3rem;color:var(--muted);font-size:.9rem;border-top:1px solid var(--line);margin-top:2rem}
 
 /* Survey */
-.bar{position:sticky;top:env(safe-area-inset-top,0px);background:var(--paper);z-index:5;border-bottom:1px solid var(--line)}
+.bar{position:sticky;top:env(safe-area-inset-top,0px);background:var(--paper);z-index:5}
 .bar-inner{display:flex;justify-content:space-between;gap:1rem;padding:.8rem 0;font-size:.9rem;color:var(--muted)}
 .bar-inner strong{color:var(--ink);font-weight:600}
 .progress{height:3px;background:var(--line)}
@@ -524,6 +524,7 @@ function renderSection(){
   var nextBtn = h("button",{class:"btn", type:"button", onclick:function(){ next(s, last, nextBtn, sendErr); }}, last ? "Submit answers" : "Continue");
   app.append(
     h("div",{class:"bar"},
+      brand(),
       h("div",{class:"wrap"}, h("div",{class:"bar-inner"}, barText, h("span",null, s.title))),
       h("div",{class:"progress","aria-hidden":"true"}, barFill)
     ),
