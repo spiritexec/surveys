@@ -403,7 +403,11 @@ function renderLanding(){
     )
   );
 }
-function begin(){ if(!store.startedAt) store.startedAt = Date.now(); go(0); }
+function begin(){
+  var isFirstStart = !store.startedAt;
+  if(isFirstStart){ store.startedAt = Date.now(); track("start"); }
+  go(0);
+}
 function restart(){ store = fresh(); A = store.answers; store.startedAt = Date.now(); go(0); }
 
 /* ---------- Questions ---------- */
@@ -630,6 +634,10 @@ function postJson(obj){
   return fetch(CONFIG.jsonEndpoint, {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify(obj)})
     .then(function(r){ if(!r.ok) throw new Error("HTTP " + r.status); });
 }
+function track(eventType){
+  if(embedded() || CONFIG.submit !== "json") return;
+  postJson({key:CONFIG.sharedSecret, type:"event", event:eventType}).catch(function(){});
+}
 function submit(btn, sendErr){
   var mode = embedded() ? "preview" : CONFIG.submit;
   var payload = buildPayload();
@@ -696,6 +704,7 @@ function renderDone(preview, gaveEmail){
 
 /* ---------- Start ---------- */
 renderLanding();
+track("view");
 })();
 </script>
 </body>
