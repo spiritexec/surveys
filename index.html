@@ -513,14 +513,18 @@ function qEl(q){
     var ta = h("textarea",{id:tid, rows:"4"});
     ta.value = A[q.id] || "";
     ta.addEventListener("input", function(){ A[q.id] = ta.value; save(); });
-    wrap.append(labelEl(q,"label",{for:tid}), help, ta);
+    wrap.append(labelEl(q,"label",{for:tid}));
+    if(help) wrap.append(help);
+    wrap.append(ta);
   }
   else if(q.type === "email"){
     var eid = "f-" + q.id;
     var inp = h("input",{id:eid, type:"email", autocomplete:"email", inputmode:"email", placeholder:"you@company.com"});
     inp.value = A[q.id] || "";
     inp.addEventListener("input", function(){ A[q.id] = inp.value; save(); clearMissing(wrap); });
-    wrap.append(labelEl(q,"label",{for:eid}), help, inp, h("p",{class:"err", role:"alert"}, "Enter a valid email address, or leave this blank."));
+    wrap.append(labelEl(q,"label",{for:eid}));
+    if(help) wrap.append(help);
+    wrap.append(inp, h("p",{class:"err", role:"alert"}, "Enter a valid email address, or leave this blank."));
   }
   else if(q.type === "check"){
     wrap.append(h("div",{class:"opts"},
