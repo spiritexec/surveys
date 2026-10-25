@@ -182,8 +182,9 @@ textarea{min-height:7.5rem;resize:vertical}
 
 /* Settings for hosting. "netlify" posts to Netlify Forms; "json" posts to CONFIG.jsonEndpoint; "preview" never sends (test mode). */
 var CONFIG = {
-  submit: "preview", /* TEST MODE: flip to "json" and set jsonEndpoint once the EU backend (Power Automate) is ready */
-  jsonEndpoint: "",
+  submit: "json",
+  jsonEndpoint: "https://default401ff9e010e340efb50e7697ed5861.ef.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/05/workflows/85fe9178429c4cc1bff987c80bc1b003/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=SLppSLsqgyGpONt8jho7zcyUcpn9hzah2rf4vGMUqDw",
+  sharedSecret: "FzKUXejDM1K1bZZRevpL6s4_2qf9NuMS",
   surveyForm: "senior-leaders-survey",
   contactForm: "report-requests",
   version: "2026-10-v1-test"
@@ -635,8 +636,8 @@ function submit(btn, sendErr){
   var p;
   if(mode === "preview") p = Promise.resolve();
   else if(mode === "json"){
-    p = postJson({type:"response", payload:payload}).then(function(){
-      if(email) return postJson({type:"report-request", email:email, briefing:briefing}).catch(function(){});
+    p = postJson({key:CONFIG.sharedSecret, type:"response", payload:payload}).then(function(){
+      if(email) return postJson({key:CONFIG.sharedSecret, type:"report-request", email:email, briefing:briefing}).catch(function(){});
     });
   } else {
     p = postForm(CONFIG.surveyForm, {payload: JSON.stringify(payload)}).then(function(){
