@@ -163,6 +163,7 @@ textarea{min-height:7.5rem;resize:vertical}
 </style>
 </head>
 <body>
+<input type="text" id="website" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px">
 <!-- Hidden forms let Netlify Forms detect the fields when the page is hosted there. -->
 <form name="senior-leaders-survey" data-netlify="true" hidden><input name="payload"></form>
 <form name="report-requests" data-netlify="true" hidden><input name="email"><input name="briefing"></form>
@@ -184,8 +185,7 @@ textarea{min-height:7.5rem;resize:vertical}
 /* Settings for hosting. "netlify" posts to Netlify Forms; "json" posts to CONFIG.jsonEndpoint; "preview" never sends (test mode). */
 var CONFIG = {
   submit: "json",
-  jsonEndpoint: "https://default401ff9e010e340efb50e7697ed5861.ef.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/05/workflows/85fe9178429c4cc1bff987c80bc1b003/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=SLppSLsqgyGpONt8jho7zcyUcpn9hzah2rf4vGMUqDw",
-  sharedSecret: "FzKUXejDM1K1bZZRevpL6s4_2qf9NuMS",
+  jsonEndpoint: "https://spiritexec-site.vercel.app/api/survey",
   surveyForm: "senior-leaders-survey",
   contactForm: "report-requests",
   version: "2026-10-v1-test"
@@ -631,13 +631,14 @@ function postForm(name, fields){
   return fetch("/", {method:"POST", headers:{"Content-Type":"application/x-www-form-urlencoded"}, body:body})
     .then(function(r){ if(!r.ok) throw new Error("HTTP " + r.status); });
 }
+function hp(){ var el = document.getElementById("website"); return el ? el.value : ""; }
 function postJson(obj){
-  return fetch(CONFIG.jsonEndpoint, {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify(obj)})
+  return fetch(CONFIG.jsonEndpoint, {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify(Object.assign({website: hp()}, obj))})
     .then(function(r){ if(!r.ok) throw new Error("HTTP " + r.status); });
 }
 function track(eventType){
   if(embedded() || CONFIG.submit !== "json") return;
-  postJson({key:CONFIG.sharedSecret, type:"event", event:eventType}).catch(function(){});
+  postJson({type:"event", event:eventType}).catch(function(){});
 }
 function submit(btn, sendErr){
   var mode = embedded() ? "preview" : CONFIG.submit;
@@ -649,8 +650,8 @@ function submit(btn, sendErr){
   var p;
   if(mode === "preview") p = Promise.resolve();
   else if(mode === "json"){
-    p = postJson({key:CONFIG.sharedSecret, type:"response", payload:payload}).then(function(){
-      if(email) return postJson({key:CONFIG.sharedSecret, type:"report-request", email:email, briefing:briefing}).catch(function(){});
+    p = postJson({type:"response", payload:payload}).then(function(){
+      if(email) return postJson({type:"report-request", email:email, briefing:briefing}).catch(function(){});
     });
   } else {
     p = postForm(CONFIG.surveyForm, {payload: JSON.stringify(payload)}).then(function(){
