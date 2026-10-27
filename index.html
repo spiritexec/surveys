@@ -120,6 +120,7 @@ legend,.q-label{display:block;padding:0;font-weight:600;font-size:1.08rem;line-h
 .opt .mark.sq{border-radius:4px}
 .opt:has(input:checked){border-color:var(--accent);background:var(--tint)}
 .opt:has(input:checked) .mark{background:var(--accent);border-color:var(--accent);box-shadow:inset 0 0 0 3px var(--surface)}
+.opt.ranked .mark{display:flex !important;align-items:center;justify-content:center;background:var(--accent) !important;border-color:var(--accent) !important;box-shadow:none !important;color:var(--surface) !important;font-size:.72rem;font-weight:700;line-height:1}
 .opt:has(input:focus-visible){outline:3px solid var(--accent);outline-offset:2px}
 .opt.disabled{opacity:.45;cursor:not-allowed}
 
@@ -168,6 +169,11 @@ textarea{min-height:7.5rem;resize:vertical}
 <form name="report-requests" data-netlify="true" hidden><input name="email"><input name="briefing"></form>
 
 <main id="app"></main>
+<!-- Honeypot: hidden from people, often filled in by bots. Left blank is the expected human behaviour. -->
+<div aria-hidden="true" style="position:absolute;left:-9999px;top:-9999px;width:1px;height:1px;overflow:hidden">
+  <label for="hp-company">Company</label>
+  <input type="text" id="hp-company" name="company" tabindex="-1" autocomplete="off">
+</div>
 <noscript>
 <div class="wrap">
 <h1>What senior leaders want from their next role</h1>
@@ -193,6 +199,11 @@ var CONFIG = {
 
 var KEY = "slr-survey-progress-v1";
 var DONE_KEY = "slr-survey-done-v1";
+var SRC = (function(){
+  try{ var m = location.search.match(/[?&]src=([^&]+)/); return m ? decodeURIComponent(m[1]).slice(0, 40) : "direct"; }
+  catch(e){ return "direct"; }
+})();
+function honeypot(){ var el = document.getElementById("hp-company"); return el ? el.value : ""; }
 
 var FACTORS = [
   ["salary","Salary and total reward"],
@@ -207,21 +218,24 @@ var LIKERT = ["Strongly disagree","Disagree","Neither agree nor disagree","Agree
 var LIKERT_SHORT = ["Strongly disagree","Disagree","Neither","Agree","Strongly agree"];
 
 function leads(a){ return !!a.teamsize && a.teamsize !== "None"; }
+function inIreland(a){ return a.market === "Ireland"; }
 
 var SECTIONS = [
   { id:"you", title:"About you",
     intro:"A few questions so we can compare answers across levels and sectors. We don’t ask for your name or employer.",
     qs:[
       {id:"level", type:"single", label:"Which best describes your current level?",
-        options:["CEO, Managing Director or Country Manager","Other C-suite (CFO, COO, CMO, CHRO or similar)","Director or Vice President","Head of function or department","Senior manager","Other"]},
+        options:["CEO, Managing Director or Country Manager","Other C-suite (CFO, COO, CMO, CHRO or similar)","Director or Vice President","Head of function or department","Senior manager","Manager","Individual contributor","Other"]},
       {id:"sector", type:"single", label:"Which sector do you work in?",
         options:["Drinks","Food and FMCG","Retail","Pharma and life sciences","Technology","Financial services","Professional services","Manufacturing and industrial","Public sector and semi-state","Other"]},
       {id:"ownership", type:"single", label:"How is your organisation owned?",
         options:["Irish-owned, private","Irish-owned, publicly listed","Multinational headquartered outside Ireland","Private equity backed","Public sector or semi-state","Other"]},
       {id:"teamsize", type:"single", label:"How many people do you lead, directly and indirectly?",
         options:["None","1 to 10","11 to 50","51 to 250","More than 250"]},
-      {id:"location", type:"single", label:"Where are you based?",
-        options:["Dublin","Rest of Leinster","Munster","Connacht or Ulster (Republic of Ireland)","Northern Ireland","Outside the island of Ireland"]},
+      {id:"market", type:"single", label:"Which market are you based in?",
+        options:["Ireland","UK","Other"]},
+      {id:"location", type:"single", label:"Where in Ireland are you based?", showIf:inIreland,
+        options:["Dublin","Rest of Leinster","Munster","Connacht or Ulster","Northern Ireland"]},
       {id:"age", type:"single", optional:true, label:"Your age",
         options:["Under 40","40 to 49","50 to 59","60 or over","Prefer not to say"]},
       {id:"gender", type:"single", optional:true, label:"How do you describe your gender?",
@@ -231,8 +245,11 @@ var SECTIONS = [
     intro:"A couple of quick picks, moved up front so the office questions later don’t push your answer.",
     qs:[
       {id:"top3_move", type:"multi", factors:true, max:3, exact:true,
-        label:"If you were considering a move, which three of these would matter most?",
-        help:"Choose exactly three."},
+        label:"Which three would most attract you to a new role? Rank them 1 to 3.",
+        help:"Tap your top three, in order — the first you tap is ranked 1."},
+      {id:"top3_stay", type:"multi", factors:true, max:3, exact:true,
+        label:"Which three would most keep you in your current role? Rank them 1 to 3.",
+        help:"Tap your top three, in order — the first you tap is ranked 1."},
       {id:"leave_factor", type:"single", factors:true,
         label:"Which one of these, done badly, would be most likely to make you leave your current role?"},
       {id:"openness", type:"single", label:"How open are you to a move in the next 12 months?",
@@ -260,6 +277,16 @@ var SECTIONS = [
         label:"In the last three years, has office attendance been a reason you did any of the following?",
         help:"Select all that apply.",
         options:["Declined an approach about a role","Withdrew from a recruitment process","Turned down an offer","Left a role","None of these"]}
+    ]},
+  { id:"role", title:"Your current role",
+    intro:"A few questions about where things stand where you are now.",
+    qs:[
+      {id:"progression", type:"single", label:"Can you see your next career step in your current organisation?",
+        options:["Yes, clearly","Possibly","No","I’m already at the top"]},
+      {id:"culture_match", type:"single", label:"Does your organisation’s culture in practice match what it says it is?",
+        options:["Fully","Mostly","Partly","Not at all"]},
+      {id:"boss_quality", type:"single", label:"What single quality matters most in the person you’d report to?",
+        options:["Trusts me and gives autonomy","Clear direction","Honesty","Develops me","Backs me up","Other"]}
     ]},
   { id:"lead", title:"As a leader", showIf:leads,
     intro:"Now some questions about the expectations you set for others.",
@@ -377,7 +404,7 @@ function renderLanding(){
         h("ul",{class:"facts"},
           h("li",null,"About 5 minutes", h("span",null,"Most questions are a single tap")),
           h("li",null,"Anonymous", h("span",null,"No name or employer asked")),
-          h("li",null,"Senior leaders", h("span",null,"Head of level to C-suite"))
+          h("li",null,"Senior leaders", h("span",null,"Head of function and above"))
         ),
         actions,
         wasDone() ? h("p",{class:"note"}, "You’ve already completed this survey on this device. Thank you.") : null,
@@ -442,7 +469,9 @@ function qEl(q){
     var fs = h("fieldset",null, labelEl(q,"legend"), help,
       h("div",{class:"opts"}, qOptions(q).map(function(o){
         return optionRow("radio", q.id, o, o, A[q.id] === o, false, function(){
-          A[q.id] = o; save(); clearMissing(wrap); if(q.id === "teamsize") updateBar();
+          A[q.id] = o; save(); clearMissing(wrap);
+          if(q.id === "teamsize") updateBar();
+          if(q.id === "market") refreshQs();
         });
       })));
     wrap.append(fs, err);
@@ -452,7 +481,8 @@ function qEl(q){
     var fs2 = h("fieldset",null, labelEl(q,"legend"), help,
       h("div",{class:"opts"}, qOptions(q).map(function(o){
         var dis = q.max && cur.length >= q.max && cur.indexOf(o) < 0;
-        return optionRow("checkbox", q.id, o, o, cur.indexOf(o) >= 0, dis, function(e){
+        var idx = cur.indexOf(o);
+        var row = optionRow("checkbox", q.id, o, o, idx >= 0, dis, function(e){
           var next = (A[q.id] || []).slice();
           if(e.target.checked){
             if(o === q.exclusive) next = [o];
@@ -460,6 +490,8 @@ function qEl(q){
           } else next = next.filter(function(x){ return x !== o; });
           A[q.id] = next; save(); replaceQ(q, 'input[value="' + cssEsc(o) + '"]');
         });
+        if(q.exact && idx >= 0){ row.classList.add("ranked"); row.querySelector(".mark").textContent = String(idx + 1); }
+        return row;
       })));
     wrap.append(fs2, err);
   }
@@ -558,21 +590,32 @@ function answered(q){
 function validEmail(s){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s); }
 
 /* ---------- Section view ---------- */
-var barText, barFill;
+var barText, barFill, curSection;
 function updateBar(){
   var secs = visibleSections(), n = secs.length, i = Math.min(store.step, n - 1);
   if(barText) barText.textContent = "Part " + (i + 1) + " of " + n;
   if(barFill) barFill.style.width = Math.round((i / n) * 100) + "%";
 }
+/* Rebuilds the visible question list for the current section in place (preserves scroll),
+   for questions whose showIf depends on an answer given earlier in the same section. */
+function refreshQs(){
+  if(!curSection) return;
+  var wrapEl = document.querySelector(".qs-list");
+  if(!wrapEl) return;
+  wrapEl.innerHTML = "";
+  curSection.qs.filter(function(q){ return !q.showIf || q.showIf(A); }).forEach(function(q){ wrapEl.append(qEl(q)); });
+}
 function renderSection(){
   var secs = visibleSections();
   var i = Math.min(store.step, secs.length - 1);
   var s = secs[i], last = i === secs.length - 1;
+  curSection = s;
   app.innerHTML = "";
   barText = h("strong",null,"");
   barFill = h("i",null);
   var head = h("h2",{tabindex:"-1"}, s.title);
   var sendErr = h("p",{class:"send-err", role:"alert", hidden:true});
+  var qsWrap = h("div",{class:"qs-list"}, s.qs.filter(function(q){ return !q.showIf || q.showIf(A); }).map(qEl));
   var nextBtn = h("button",{class:"btn", type:"button", onclick:function(){ next(s, last, nextBtn, sendErr); }}, last ? "Submit answers" : "Continue");
   app.append(
     h("div",{class:"bar"},
@@ -582,7 +625,7 @@ function renderSection(){
     ),
     h("div",{class:"wrap"},
       h("div",{class:"sec-head"}, head, s.intro ? h("p",null, s.intro) : null),
-      s.qs.filter(function(q){ return !q.showIf || q.showIf(A); }).map(qEl),
+      qsWrap,
       h("div",{class:"nav"},
         h("button",{class:"btn secondary", type:"button", onclick:function(){ i > 0 ? go(i - 1) : goLanding(); }}, i > 0 ? "Back" : "Back to introduction"),
         nextBtn
@@ -622,8 +665,9 @@ function buildPayload(){
     version: CONFIG.version,
     submittedAt: new Date().toISOString(),
     minutesTaken: store.startedAt ? Math.max(1, Math.round((Date.now() - store.startedAt) / 60000)) : null,
+    source: SRC,
     answers: answers,
-    factorDisplayOrder: { top3_move: store.shuffles.top3_move, leave_factor: store.shuffles.leave_factor, perceived_rank: store.shuffles.perceived_rank }
+    factorDisplayOrder: { top3_move: store.shuffles.top3_move, top3_stay: store.shuffles.top3_stay, leave_factor: store.shuffles.leave_factor, perceived_rank: store.shuffles.perceived_rank }
   };
 }
 function postForm(name, fields){
@@ -637,20 +681,21 @@ function postJson(obj){
 }
 function track(eventType){
   if(embedded() || CONFIG.submit !== "json") return;
-  postJson({key:CONFIG.sharedSecret, type:"event", event:eventType}).catch(function(){});
+  postJson({key:CONFIG.sharedSecret, type:"event", event:eventType, source:SRC, hp:honeypot()}).catch(function(){});
 }
 function submit(btn, sendErr){
   var mode = embedded() ? "preview" : CONFIG.submit;
   var payload = buildPayload();
   var email = (A.email || "").trim();
   var briefing = !!A.briefing;
+  var hp = honeypot();
   btn.disabled = true; btn.textContent = "Sending…"; sendErr.hidden = true;
 
   var p;
   if(mode === "preview") p = Promise.resolve();
   else if(mode === "json"){
-    p = postJson({key:CONFIG.sharedSecret, type:"response", payload:payload}).then(function(){
-      if(email) return postJson({key:CONFIG.sharedSecret, type:"report-request", email:email, briefing:briefing}).catch(function(){});
+    p = postJson({key:CONFIG.sharedSecret, type:"response", hp:hp, payload:payload}).then(function(){
+      if(email) return postJson({key:CONFIG.sharedSecret, type:"report-request", hp:hp, email:email, briefing:briefing, source:SRC}).catch(function(){});
     });
   } else {
     p = postForm(CONFIG.surveyForm, {payload: JSON.stringify(payload)}).then(function(){
