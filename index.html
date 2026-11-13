@@ -194,7 +194,7 @@ var CONFIG = {
   sharedSecret: "GVJMh8CWDMH4e1RKuCeYgjGBc3zlzKwc",
   surveyForm: "senior-leaders-survey",
   contactForm: "report-requests",
-  version: "2026-10-v1-test"
+  version: "2026-11-pilot-a"
 };
 
 var KEY = "slr-survey-progress-v1";
@@ -425,9 +425,17 @@ function renderLanding(){
         h("section",null,
           h("h2",null,"Who is running it"),
           h("p",null,"The study is run by AIMS International Ireland, a partner-led executive search firm and part of AIMS International, a network of search firms in more than 70 countries.")
+        ),
+        h("section",{id:"privacy"},
+          h("h2",null,"Your privacy"),
+          h("p",null,"Taking part is your choice. The study is run by Spirit Recruitment Limited, trading as Spirit Executive, the Irish member of AIMS International (registered in Ireland, company number 483079). We are responsible for looking after what you tell us."),
+          h("p",null,"Your answers are kept in our own Microsoft 365 account and used only by the two partners running the study. We don’t record your name, your employer or your IP address with them. Your progress is saved in your own browser until you submit, so you can pause and come back."),
+          h("p",null,"We delete the answers, and any email address you leave, 12 months after the findings are published. An email address is used only to send you what you asked for."),
+          h("p",null,"Because we don’t ask who you are, we can’t find your answers afterwards to show or remove them. If you left an email address, you can ask us to show or delete it at any time."),
+          h("p",null,"To ask a question or make a request, email ", h("a",{href:"mailto:info@spiritexec.com"},"info@spiritexec.com"), ". You also have the right to complain to the Data Protection Commission in Ireland, or the Information Commissioner’s Office in the UK.")
         )
       ),
-      h("footer",null, "Questions about this study: Mark Burgess and John Robinson, Spirit Exec | AIMS Ireland.")
+      h("footer",null, "Questions about this study: Mark Burgess and John Robinson, Spirit Exec | AIMS Ireland, ", h("a",{href:"mailto:info@spiritexec.com"},"info@spiritexec.com"), ".")
     )
   );
 }
@@ -650,6 +658,7 @@ function next(s, last, btn, sendErr){
     var f = first.querySelector("input,button,textarea"); if(f) f.focus({preventScroll:true});
     return;
   }
+  if(!last && !(store.passed >= store.step + 1)){ store.passed = store.step + 1; track("part-done:" + s.id); }
   if(last) submit(btn, sendErr); else go(store.step + 1);
 }
 function go(i){ store.step = i; save(); renderSection(); }
