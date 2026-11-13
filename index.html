@@ -61,7 +61,7 @@ a{color:var(--accent)}
 
 .hero{padding:1.75rem 0 .5rem}
 h1{font-family:"IBM Plex Sans",system-ui,sans-serif;font-weight:600;
-  font-size:clamp(2.1rem,6vw,3.3rem);line-height:1.04;letter-spacing:-.015em;margin:0 0 1rem;max-width:16ch}
+  font-size:clamp(2.1rem,6vw,3.3rem);line-height:1.04;letter-spacing:-.015em;margin:0 0 1rem;max-width:24ch;text-wrap:balance}
 .lede{font-size:1.15rem;line-height:1.5;color:var(--muted);max-width:48rem;margin:0 0 1.5rem}
 .facts{display:flex;flex-wrap:wrap;justify-content:center;gap:1rem 2rem;margin:0 0 1.5rem;padding:0;list-style:none}
 .facts li{border-top:3px solid var(--ink);padding-top:.5rem;min-width:9rem;font-weight:500;line-height:1.35}
@@ -87,7 +87,16 @@ h1{font-family:"IBM Plex Sans",system-ui,sans-serif;font-weight:600;
 @keyframes scrollCue{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
 @media (prefers-reduced-motion:reduce){.scroll-cue button{animation:none}}
 
-.info{padding:1.75rem 0 1rem;border-top:1px solid var(--line);margin-top:1.75rem}
+.info{padding:0 0 1rem;margin-top:2rem}
+.pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem 2rem}
+.pillars section{border-top:3px solid var(--ink);padding-top:.75rem;margin:0}
+.pillars section:nth-child(even){border-color:var(--accent)}
+.pillars h2{font-size:1.15rem;margin:0 0 .5rem}
+.pillars p{font-size:.97rem;line-height:1.5;margin:0 0 .6rem}
+@media (max-width:760px){.pillars{grid-template-columns:1fr}}
+.privacy{margin-top:1.75rem;border-top:1px solid var(--line);padding-top:1rem}
+.privacy summary{cursor:pointer;font-weight:600;font-size:1rem}
+.privacy p{font-size:.95rem;color:var(--muted);margin:.75rem 0 0;max-width:48rem}
 .info h2,.sec-head h2{font-family:"IBM Plex Sans",system-ui,sans-serif;font-weight:600;font-size:1.5rem;line-height:1.2;margin:0 0 .75rem}
 .info section{margin-bottom:1.5rem}
 .info p{margin:0 0 .75rem;max-width:48rem}
@@ -410,26 +419,26 @@ function renderLanding(){
         ),
         actions,
         wasDone() ? h("p",{class:"note"}, "You’ve already completed this survey on this device. Thank you.") : null,
-        storageOk ? h("p",{class:"note"}, "Your progress is saved on this device, so you can pause and come back.") : null,
-        scrollCue()
+        storageOk ? h("p",{class:"note"}, "Your progress is saved on this device, so you can pause and come back.") : null
       ),
       h("div",{class:"info"},
-        h("section",null,
-          h("h2",null,"Why we’re asking"),
-          h("p",null,"Most research on work and careers looks at employers or at the workforce as a whole. Far less asks senior leaders directly what decides where they go, what keeps them, and how they set expectations for the people they lead."),
-          h("p",null,"Your answers will help employers understand what it really takes to attract and keep senior talent in Ireland.")
+        h("div",{class:"pillars"},
+          h("section",null,
+            h("h2",null,"Why we’re asking"),
+            h("p",null,"Most research asks employers, or the workforce as a whole. Far less asks senior leaders directly what decides where they go, what keeps them, and what they expect of their own teams.")
+          ),
+          h("section",null,
+            h("h2",null,"How your answers are used"),
+            h("p",null,"We don’t ask for your name or employer. Results are reported in aggregate only, never for a group of fewer than ten people."),
+            h("p",null,"Leave an email at the end if you’d like the findings in early 2027. It is stored separately from your answers.")
+          ),
+          h("section",null,
+            h("h2",null,"Who is running it"),
+            h("p",null,"AIMS International Ireland, a partner-led executive search firm and part of AIMS International, a network of search firms in more than 70 countries.")
+          )
         ),
-        h("section",null,
-          h("h2",null,"How your answers are used"),
-          h("p",null,"We don’t ask for your name or employer. Results are reported only in aggregate, and we never report on any group of fewer than ten people."),
-          h("p",null,"If you’d like a copy of the findings, you can leave an email address at the end. It is sent and stored separately from your answers. The findings will be shared with participants in early 2027.")
-        ),
-        h("section",null,
-          h("h2",null,"Who is running it"),
-          h("p",null,"The study is run by AIMS International Ireland, a partner-led executive search firm and part of AIMS International, a network of search firms in more than 70 countries.")
-        ),
-        h("section",{id:"privacy"},
-          h("h2",null,"Your privacy"),
+        h("details",{class:"privacy", id:"privacy"},
+          h("summary",null,"Your privacy, in full"),
           h("p",null,"Taking part is your choice. The study is run by Spirit Recruitment Limited, trading as Spirit Executive, the Irish member of AIMS International (registered in Ireland, company number 483079). We are responsible for looking after what you tell us."),
           h("p",null,"Your answers are kept in our own Microsoft 365 account and used only by the two partners running the study. We don’t record your name, your employer or your IP address with them. Your progress is saved in your own browser until you submit, so you can pause and come back."),
           h("p",null,"We delete the answers, and any email address you leave, 12 months after the findings are published. An email address is used only to send you what you asked for."),
@@ -437,8 +446,14 @@ function renderLanding(){
           h("p",null,"To ask a question or make a request, email ", h("a",{href:"mailto:info@spiritexec.com"},"info@spiritexec.com"), ". You also have the right to complain to the Data Protection Commission in Ireland, or the Information Commissioner’s Office in the UK.")
         )
       ),
-      h("footer",null, "Questions about this study: Mark Burgess and John Robinson, Spirit Exec | AIMS Ireland, ", h("a",{href:"mailto:info@spiritexec.com"},"info@spiritexec.com"), ".")
+      siteFooter()
     )
+  );
+}
+function siteFooter(){
+  return h("footer",null,
+    h("p",{style:"margin:0 0 .35rem"}, "Questions about this study: Mark Burgess and John Robinson, Spirit Exec | AIMS Ireland, ", h("a",{href:"mailto:info@spiritexec.com"},"info@spiritexec.com"), "."),
+    h("p",{style:"margin:0"}, "© " + new Date().getFullYear() + " Spirit Recruitment Limited, trading as Spirit Executive. All rights reserved.")
   );
 }
 function begin(){
@@ -752,7 +767,7 @@ function renderDone(preview, gaveEmail){
           )
         )
       ),
-      h("footer",null, "Questions about this study: Mark Burgess and John Robinson, Spirit Exec | AIMS Ireland.")
+      siteFooter()
     )
   );
   window.scrollTo(0,0);
