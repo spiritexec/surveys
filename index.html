@@ -257,7 +257,6 @@ var SECTIONS = [
         options:["Woman","Man","I describe myself another way","Prefer not to say"]}
     ]},
   { id:"matters", title:"What matters most",
-    intro:"Four quick picks on what draws you to a role, what keeps you there and what would make you leave.",
     qs:[
       {id:"top3_move", type:"multi", factors:true, max:3, exact:true,
         label:"Which three would most attract you to a new role? Rank them 1 to 3.",
@@ -302,7 +301,7 @@ var SECTIONS = [
         options:["Increased them","No change","Reduced them","An increase is planned","Not sure"]},
       {id:"perceived_rank", type:"multi", factors:true, max:3, exact:true,
         label:"Which three would the senior candidates you hire say matter most?", norank:true,
-        help:"Choose any three, in no particular order. Same list as before."},
+        help:"Choose any three."},
       {id:"lost_talent", type:"single", label:"In the last two years, have you lost a hire or a team member where office policy was a factor?",
         options:["Yes, more than once","Yes, once","No","Not sure"]},
       {id:"statements", type:"likert", label:"How far do you agree with each statement?",
@@ -748,7 +747,7 @@ function renderDone(preview, gaveEmail){
         head,
         h("p",{class:"lede"}, gaveEmail
           ? "Your answers have been recorded. We’ll send you the findings in early 2027."
-          : "Your answers have been recorded and will be combined with those of other senior leaders across Ireland and the UK."),
+          : "Your answers have been recorded and will be combined with those of other senior leaders across Ireland and the UK in an anonymous, non-attributable way."),
         preview ? h("p",{class:"note"}, "Not recorded in this test build.") : null,
         h("div",{class:"share"},
           h("h2",{class:"q-label"}, "Know other senior leaders who should take part?"),
