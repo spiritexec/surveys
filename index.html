@@ -185,10 +185,6 @@ textarea{min-height:7.5rem;resize:vertical}
 </style>
 </head>
 <body>
-<!-- Hidden forms let Netlify Forms detect the fields when the page is hosted there. -->
-<form name="senior-leaders-survey" data-netlify="true" hidden><input name="payload"></form>
-<form name="report-requests" data-netlify="true" hidden><input name="email"><input name="briefing"></form>
-
 <main id="app"></main>
 <!-- Honeypot: hidden from people, often filled in by bots. Left blank is the expected human behaviour. -->
 <div aria-hidden="true" style="position:absolute;left:-9999px;top:-9999px;width:1px;height:1px;overflow:hidden">
@@ -208,14 +204,14 @@ textarea{min-height:7.5rem;resize:vertical}
 (function(){
 "use strict";
 
-/* Settings for hosting. "netlify" posts to Netlify Forms; "json" posts to CONFIG.jsonEndpoint; "preview" never sends (test mode). */
+/* Settings for hosting. "json" posts to CONFIG.jsonEndpoint; "preview" never sends (test mode).
+   This is a static page, so the flow address and key below are public by design. They only stop casual
+   noise; the real checks (key, time taken, level and sector filled, honeypot) run in the flow. */
 var CONFIG = {
   submit: "json",
   jsonEndpoint: "https://default401ff9e010e340efb50e7697ed5861.ef.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/05/workflows/85fe9178429c4cc1bff987c80bc1b003/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=SLppSLsqgyGpONt8jho7zcyUcpn9hzah2rf4vGMUqDw",
   sharedSecret: "GVJMh8CWDMH4e1RKuCeYgjGBc3zlzKwc",
-  surveyForm: "senior-leaders-survey",
-  contactForm: "report-requests",
-  version: "2026-11-pilot-a2"
+  version: "2026-11-pilot-a3"
 };
 
 var KEY = "slr-survey-progress-v1";
@@ -261,7 +257,7 @@ var SECTIONS = [
         options:["Woman","Man","I describe myself another way","Prefer not to say"]}
     ]},
   { id:"matters", title:"What matters most",
-    intro:"A couple of quick picks, moved up front so the office questions later don’t push your answer.",
+    intro:"Four quick picks on what draws you to a role, what keeps you there and what would make you leave.",
     qs:[
       {id:"top3_move", type:"multi", factors:true, max:3, exact:true,
         label:"Which three would most attract you to a new role? Rank them 1 to 3.",
@@ -305,8 +301,8 @@ var SECTIONS = [
       {id:"org_change", type:"single", label:"In the last 12 months, has your organisation changed its office attendance requirements?",
         options:["Increased them","No change","Reduced them","An increase is planned","Not sure"]},
       {id:"perceived_rank", type:"multi", factors:true, max:3, exact:true,
-        label:"Which three would the senior candidates you hire say matter most?",
-        help:"Choose exactly three. Same list as before."},
+        label:"Which three would the senior candidates you hire say matter most?", norank:true,
+        help:"Choose any three, in no particular order. Same list as before."},
       {id:"lost_talent", type:"single", label:"In the last two years, have you lost a hire or a team member where office policy was a factor?",
         options:["Yes, more than once","Yes, once","No","Not sure"]},
       {id:"statements", type:"likert", label:"How far do you agree with each statement?",
@@ -317,7 +313,7 @@ var SECTIONS = [
         ]}
     ]},
   { id:"close", title:"Final thoughts",
-    intro:"Two optional questions, then you’re done.",
+    intro:"A few optional last questions, then you’re done.",
     qs:[
       {id:"wrong", type:"text", optional:true, label:"What is the one thing employers get wrong when trying to attract senior people?"},
       {id:"email", type:"email", optional:true, label:"Would you like a copy of the findings?",
@@ -520,7 +516,7 @@ function qEl(q){
           } else next = next.filter(function(x){ return x !== o; });
           A[q.id] = next; save(); replaceQ(q, 'input[value="' + cssEsc(o) + '"]');
         });
-        if(q.exact && idx >= 0){ row.classList.add("ranked"); row.querySelector(".mark").textContent = String(idx + 1); }
+        if(q.exact && !q.norank && idx >= 0){ row.classList.add("ranked"); row.querySelector(".mark").textContent = String(idx + 1); }
         return row;
       })));
     wrap.append(fs2, err);
@@ -704,36 +700,28 @@ function buildPayload(){
     factorDisplayOrder: { top3_move: store.shuffles.top3_move, top3_stay: store.shuffles.top3_stay, leave_factor: store.shuffles.leave_factor, perceived_rank: store.shuffles.perceived_rank }
   };
 }
-function postForm(name, fields){
-  var body = new URLSearchParams(Object.assign({"form-name": name}, fields)).toString();
-  return fetch("/", {method:"POST", headers:{"Content-Type":"application/x-www-form-urlencoded"}, body:body})
-    .then(function(r){ if(!r.ok) throw new Error("HTTP " + r.status); });
-}
+/* Every post carries the key and the hidden honeypot field ("hp"); the flow drops any post where hp is filled in. */
 function postJson(obj){
-  return fetch(CONFIG.jsonEndpoint, {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify(obj)})
+  return fetch(CONFIG.jsonEndpoint, {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify(Object.assign({key: CONFIG.sharedSecret, hp: honeypot()}, obj))})
     .then(function(r){ if(!r.ok) throw new Error("HTTP " + r.status); });
 }
 function track(eventType){
   if(embedded() || CONFIG.submit !== "json") return;
-  postJson({key:CONFIG.sharedSecret, type:"event", event:eventType, source:SRC, hp:honeypot()}).catch(function(){});
+  postJson({type:"event", event:eventType, source:SRC}).catch(function(){});
 }
 function submit(btn, sendErr){
   var mode = embedded() ? "preview" : CONFIG.submit;
   var payload = buildPayload();
   var email = (A.email || "").trim();
   var briefing = !!A.briefing;
-  var hp = honeypot();
   btn.disabled = true; btn.textContent = "Sending…"; sendErr.hidden = true;
 
   var p;
   if(mode === "preview") p = Promise.resolve();
-  else if(mode === "json"){
-    p = postJson({key:CONFIG.sharedSecret, type:"response", hp:hp, payload:payload}).then(function(){
-      if(email) return postJson({key:CONFIG.sharedSecret, type:"report-request", hp:hp, email:email, briefing:briefing, source:SRC}).catch(function(){});
-    });
-  } else {
-    p = postForm(CONFIG.surveyForm, {payload: JSON.stringify(payload)}).then(function(){
-      if(email) return postForm(CONFIG.contactForm, {email:email, briefing: briefing ? "yes" : "no"}).catch(function(){});
+  else {
+    p = postJson({type:"response", payload:payload}).then(function(){
+      /* No source tag on the email request, so it can't be matched back to the answers. */
+      if(email) return postJson({type:"report-request", email:email, briefing:briefing, source:""}).catch(function(){});
     });
   }
   p.then(function(){
@@ -751,7 +739,7 @@ function submit(btn, sendErr){
 function renderDone(preview, gaveEmail){
   app.innerHTML = "";
   var copied = h("span",{class:"copied", "aria-live":"polite"});
-  var link = location.href.split("#")[0];
+  var link = location.origin + location.pathname;
   var head = h("h1",{tabindex:"-1"}, "Thank you");
   app.append(
     brand(),
@@ -760,7 +748,7 @@ function renderDone(preview, gaveEmail){
         head,
         h("p",{class:"lede"}, gaveEmail
           ? "Your answers have been recorded. We’ll send you the findings in early 2027."
-          : "Your answers have been recorded and will be combined with those of other senior leaders across Ireland."),
+          : "Your answers have been recorded and will be combined with those of other senior leaders across Ireland and the UK."),
         preview ? h("p",{class:"note"}, "Not recorded in this test build.") : null,
         h("div",{class:"share"},
           h("h2",{class:"q-label"}, "Know other senior leaders who should take part?"),
